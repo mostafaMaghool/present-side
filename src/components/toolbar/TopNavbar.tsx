@@ -5,61 +5,53 @@ import { usePresentationStore } from '@/store/usePresentationStore';
 import Link from 'next/link';
 
 export const TopNavbar: React.FC = () => {
-  const { presentation, addSlide, addElement } = usePresentationStore();
+  const { presentation } = usePresentationStore();
 
-  const handleExportJSON = () => {
-    const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(presentation, null, 2));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute('href', dataStr);
-    downloadAnchor.setAttribute('download', `${presentation.title || 'presentation'}.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
+  const handleSave = () => {
+    // اکشن ذخیره در localStorage انجام شده است، یک فیدبک ساده نشان می‌دهیم
+    alert('ارائه با موفقیت ذخیره شد!');
   };
 
   return (
-    <header className="h-14 border-b border-slate-800 bg-slate-900 px-4 flex items-center justify-between text-slate-200">
+    <header className="h-16 border-b border-[#1b2b2b] bg-[#071010] px-6 flex items-center justify-between text-slate-100 select-none">
+      {/* سمت چپ: دکمه‌های پرزنت و ذخیره */}
       <div className="flex items-center gap-3">
-        <span className="font-bold text-blue-500 text-lg">PresentSlide</span>
-        <span className="text-xs bg-slate-800 px-2 py-0.5 rounded text-slate-400">Core</span>
-      </div>
+        <button
+          onClick={handleSave}
+          className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold bg-[#10b981] hover:bg-[#059669] text-white rounded-lg transition shadow-md shadow-emerald-950/40"
+        >
+          <span>ذخیره سریع</span>
+          <span>💾</span>
+        </button>
 
-      {/* دکمه‌های ابزار ویرایش */}
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => addElement('heading')}
-          className="px-3 py-1.5 text-sm bg-slate-800 hover:bg-slate-700 rounded transition"
-        >
-          + تیتر
-        </button>
-        <button
-          onClick={() => addElement('text')}
-          className="px-3 py-1.5 text-sm bg-slate-800 hover:bg-slate-700 rounded transition"
-        >
-          + متن
-        </button>
-        <button
-          onClick={addSlide}
-          className="px-3 py-1.5 text-sm bg-blue-600 hover:bg-blue-500 rounded font-medium transition"
-        >
-          + اسلاید جدید
-        </button>
-      </div>
-
-      {/* خروجی و اجرای پرزنت */}
-      <div className="flex items-center gap-2">
-        <button
-          onClick={handleExportJSON}
-          className="px-3 py-1.5 text-sm bg-slate-800 hover:bg-slate-700 rounded transition"
-        >
-          دانلود JSON
-        </button>
         <Link
           href="/present"
-          className="px-3 py-1.5 text-sm bg-emerald-600 hover:bg-emerald-500 rounded font-medium transition"
+          className="flex items-center gap-1.5 px-4 py-2 text-xs font-semibold bg-[#111e1e] hover:bg-[#1a2d2d] text-slate-200 border border-[#213838] rounded-lg transition"
         >
-          شروع ارائه (Present)
+          <span>نمایش حالت ارائه (تمام صفحه)</span>
+          <span>💻</span>
         </Link>
+      </div>
+
+      {/* وسط: سوییچ تم تیره/روشن */}
+      <div className="flex items-center bg-[#0d1717] border border-[#1b2e2e] p-1 rounded-lg">
+        <button className="px-3 py-1 text-xs rounded-md bg-[#10b981] text-white font-medium">
+          تیره
+        </button>
+        <button className="px-3 py-1 text-xs rounded-md text-slate-400 hover:text-white transition">
+          روشن
+        </button>
+      </div>
+
+      {/* سمت راست: نام ارائه و برند */}
+      <div className="flex items-center gap-3">
+        <span className="text-sm font-semibold text-slate-300">
+          {presentation.title || 'وبینار تحلیل دارایی‌ها و سناریوها'}
+        </span>
+        <div className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-[#00c48c] text-[#052820] font-black text-xs shadow-md">
+          <span>SlideBuilder Studio</span>
+          <span>⚡</span>
+        </div>
       </div>
     </header>
   );

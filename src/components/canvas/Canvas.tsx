@@ -10,25 +10,26 @@ export const Canvas: React.FC = () => {
 
   if (!currentSlide) {
     return (
-      <div className="flex-1 flex items-center justify-center text-slate-500">
-        اسلایدی انتخاب نشده است.
+      <div className="flex-1 flex items-center justify-center text-zinc-500 font-sans">
+        هیچ اسلایدی انتخاب نشده است
       </div>
     );
   }
 
   return (
-    <div
-      className="flex-1 bg-slate-950 flex items-center justify-center p-8 overflow-auto"
+    <main
+      className="flex-1 bg-[#18181b] flex items-center justify-center p-6 overflow-auto"
       onClick={() => selectElement(null)}
     >
+      {/* بوم اسلاید با ابعاد دقیق ۱۶:۹ */}
       <div
-        className="relative w-[960px] h-[540px] shadow-2xl rounded-lg overflow-hidden border border-slate-800 transition-colors"
+        className="relative w-[960px] h-[540px] bg-slate-900 rounded-md shadow-2xl border border-zinc-700/60 overflow-hidden"
         style={{ backgroundColor: currentSlide.background }}
       >
         {currentSlide.elements.map((element) => (
           <SlideElementComponent key={element.id} element={element} />
         ))}
       </div>
-    </div>
+    </main>
   );
 };
